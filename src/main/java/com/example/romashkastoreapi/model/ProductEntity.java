@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
-@Table(name = "products")
+@Table(name = "product")
 @Entity
 public class ProductEntity {
     @Id

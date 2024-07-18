@@ -3,8 +3,8 @@ package com.example.romashkastoreapi.service;
 import com.example.romashkastoreapi.dto.product.ProductCreateDTO;
 import com.example.romashkastoreapi.dto.product.ProductDTO;
 import com.example.romashkastoreapi.exception.ResourceNotFoundException;
+import com.example.romashkastoreapi.model.ProductEntity;
 import com.example.romashkastoreapi.repository.ProductRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -24,36 +24,44 @@ public class ProductService {
     }
 
     public ProductDTO getProductById(Long id) {
+        return new ProductDTO(findProductOrThrow(id));
+    }
+
+    public ProductEntity findProductOrThrow(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
     }
 
     public List<ProductDTO> getAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findAll()
+            .stream()
+            .map(ProductDTO::new)
+            .toList();
     }
 
     public ProductDTO createProduct(ProductCreateDTO productCreateDTO) {
-        ProductDTO product = new ProductDTO();
+        ProductEntity product = new ProductEntity();
         product.setName(productCreateDTO.getName());
         product.setDescription(productCreateDTO.getDescription());
         product.setPrice(productCreateDTO.getPrice());
         product.setInStock(productCreateDTO.isInStock());
-        return productRepository.save(product);
+        ProductEntity savedProduct = productRepository.save(product);
+        return new ProductDTO(savedProduct);
     }
 
     public ProductDTO updateProduct(Long id, ProductCreateDTO productCreateDTO) {
-        ProductDTO product = productRepository.findById(id)
+        ProductEntity product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
         product.setName(productCreateDTO.getName());
         product.setDescription(productCreateDTO.getDescription());
         product.setPrice(productCreateDTO.getPrice());
         product.setInStock(productCreateDTO.isInStock());
-        return productRepository.save(product);
+        productRepository.save(product);
+        return new ProductDTO(product);
+
     }
 
     public void deleteProduct(Long id) {
-        ProductDTO product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
         productRepository.deleteById(id);
     }
 }
