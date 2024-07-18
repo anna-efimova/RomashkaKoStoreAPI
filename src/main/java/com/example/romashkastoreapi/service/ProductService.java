@@ -6,9 +6,11 @@ import com.example.romashkastoreapi.exception.ResourceNotFoundException;
 import com.example.romashkastoreapi.model.ProductEntity;
 import com.example.romashkastoreapi.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -19,7 +21,8 @@ public class ProductService {
 
     @Autowired
     public ProductService(
-            ProductRepository productRepository) {
+        ProductRepository productRepository
+    ) {
         this.productRepository = productRepository;
     }
 
@@ -29,11 +32,21 @@ public class ProductService {
 
     public ProductEntity findProductOrThrow(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
+            .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
     }
 
     public List<ProductDTO> getAllProducts() {
         return productRepository.findAll()
+            .stream()
+            .map(ProductDTO::new)
+            .toList();
+    }
+
+    public List<ProductDTO> getFilteredProducts(
+        String name, BigDecimal priceFrom, BigDecimal priceTo,
+        Boolean inStock, Pageable pageable
+    ) {
+        return productRepository.getFilteredProducts(name, priceFrom, priceTo, inStock, pageable)
             .stream()
             .map(ProductDTO::new)
             .toList();
@@ -51,7 +64,7 @@ public class ProductService {
 
     public ProductDTO updateProduct(Long id, ProductCreateDTO productCreateDTO) {
         ProductEntity product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
+            .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
         product.setName(productCreateDTO.getName());
         product.setDescription(productCreateDTO.getDescription());
         product.setPrice(productCreateDTO.getPrice());
