@@ -6,6 +6,8 @@ import com.example.romashkastoreapi.exception.ResourceNotFoundException;
 import com.example.romashkastoreapi.model.ProductEntity;
 import com.example.romashkastoreapi.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
