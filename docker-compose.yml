@@ -1,0 +1,29 @@
+version: "3"
+
+volumes:
+  postgres_volume: { }
+
+services:
+
+  romashka:
+    restart: unless-stopped
+    image: docker-java-jar:latest
+    environment:
+      - DB_URL=jdbc:postgresql://postgres:5432/romashkadb
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+  postgres:
+    restart: unless-stopped
+    hostname: postgres
+    image: postgres:16
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=romashkadb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
