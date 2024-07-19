@@ -31,3 +31,6 @@ databaseChangeLog:
                   name: in_stock
                   type: BOOLEAN
                   defaultValueBoolean: false
+        - sql:
+            sql: alter table product add constraint product_price_non_negative check (price >= 0)
+
