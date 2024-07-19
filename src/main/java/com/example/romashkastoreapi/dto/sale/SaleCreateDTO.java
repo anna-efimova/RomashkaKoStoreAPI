@@ -1,29 +1,17 @@
 package com.example.romashkastoreapi.dto.sale;
 
-import com.example.romashkastoreapi.model.ProductEntity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
-import java.math.BigDecimal;
+import jakarta.validation.constraints.*;
 
 public class SaleCreateDTO {
     @NotBlank
     @Size(max = 255)
     private String documentName;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private ProductEntity product;
+    @Positive
+    private long productId;
 
     @Min(1)
     private int quantity;
-
-    @DecimalMin("0.0")
-    private BigDecimal purchasePrice;
 
     public @NotBlank @Size(max = 255) String getDocumentName() {
         return documentName;
@@ -33,20 +21,13 @@ public class SaleCreateDTO {
         this.documentName = documentName;
     }
 
-    public ProductEntity getProduct() {
-        return product;
+    @Positive
+    public long getProductId() {
+        return productId;
     }
 
-    public void setProduct(ProductEntity product) {
-        this.product = product;
-    }
-
-    public @DecimalMin("0.0") BigDecimal getPurchasePrice() {
-        return purchasePrice;
-    }
-
-    public void setPurchasePrice(@DecimalMin("0.0") BigDecimal purchasePrice) {
-        this.purchasePrice = purchasePrice;
+    public void setProductId(@Positive long productId) {
+        this.productId = productId;
     }
 
     @Min(1)

@@ -59,7 +59,7 @@ public class ProductService {
         product.setName(productCreateDTO.getName());
         product.setDescription(productCreateDTO.getDescription());
         product.setPrice(productCreateDTO.getPrice());
-        product.setInStock(productCreateDTO.isInStock());
+        product.setQuantity(productCreateDTO.getQuantity());
         ProductEntity savedProduct = productRepository.save(product);
         return new ProductDTO(savedProduct);
     }
@@ -70,7 +70,7 @@ public class ProductService {
         product.setName(productCreateDTO.getName());
         product.setDescription(productCreateDTO.getDescription());
         product.setPrice(productCreateDTO.getPrice());
-        product.setInStock(productCreateDTO.isInStock());
+        product.setQuantity(productCreateDTO.getQuantity());
         productRepository.save(product);
         return new ProductDTO(product);
 

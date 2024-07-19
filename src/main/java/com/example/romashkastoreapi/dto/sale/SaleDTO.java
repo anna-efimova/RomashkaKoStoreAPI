@@ -1,6 +1,6 @@
 package com.example.romashkastoreapi.dto.sale;
 
-import com.example.romashkastoreapi.model.ProductEntity;
+import com.example.romashkastoreapi.dto.product.ProductDTO;
 import com.example.romashkastoreapi.model.SaleEntity;
 
 import java.math.BigDecimal;
@@ -9,14 +9,14 @@ public class SaleDTO {
 
     private Long id;
     private String documentName;
-    private ProductEntity product;
+    private ProductDTO product;
     private int quantity;
     private BigDecimal purchasePrice;
 
     public SaleDTO(SaleEntity saleEntity) {
         this.id = saleEntity.getId();
         this.documentName = saleEntity.getDocumentName();
-        this.product = saleEntity.getProduct();
+        this.product = new ProductDTO(saleEntity.getProduct());
         this.quantity = saleEntity.getQuantity();
         this.purchasePrice = saleEntity.getPurchasePrice();
     }
@@ -37,12 +37,8 @@ public class SaleDTO {
         this.documentName = documentName;
     }
 
-    public ProductEntity getProduct() {
+    public ProductDTO getProduct() {
         return product;
-    }
-
-    public void setProduct(ProductEntity product) {
-        this.product = product;
     }
 
     public int getQuantity() {

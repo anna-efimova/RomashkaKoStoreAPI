@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -28,7 +29,8 @@ public class ProductEntity {
     @DecimalMin("0.0")
     private BigDecimal price = BigDecimal.ZERO;
 
-    private boolean inStock = false;
+    @Min(0)
+    private int quantity = 0;
 
     public Long getId() {
         return id;
@@ -63,10 +65,14 @@ public class ProductEntity {
     }
 
     public boolean isInStock() {
-        return inStock;
+        return quantity > 0;
     }
 
-    public void setInStock(boolean inStock) {
-        this.inStock = inStock;
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

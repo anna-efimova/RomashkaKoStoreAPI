@@ -1,38 +1,36 @@
 package com.example.romashkastoreapi.dto.supply;
 
-import com.example.romashkastoreapi.model.ProductEntity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-import org.antlr.v4.runtime.misc.NotNull;
 
 public class SupplyCreateDTO {
-    @NotNull
+    @NotBlank
     @Size(max = 255)
     private String documentName;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private ProductEntity product;
+    @Positive
+    private long productId;
 
     @Min(1)
     private int quantity;
 
-    public @Size(max = 255) String getDocumentName() {
+    public @NotBlank @Size(max = 255) String getDocumentName() {
         return documentName;
     }
 
-    public void setDocumentName(@Size(max = 255) String documentName) {
+    public void setDocumentName(@NotBlank @Size(max = 255) String documentName) {
         this.documentName = documentName;
     }
 
-    public ProductEntity getProduct() {
-        return product;
+    @Positive
+    public long getProductId() {
+        return productId;
     }
 
-    public void setProduct(ProductEntity product) {
-        this.product = product;
+    public void setProductId(@Positive long productId) {
+        this.productId = productId;
     }
 
     @Min(1)

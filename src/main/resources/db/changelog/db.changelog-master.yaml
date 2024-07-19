@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/changelog/create-supply-table.yaml
   - include:
       file: db/changelog/changelog/create-sale-table.yaml
+  - include:
+      file: db/changelog/changelog/update-product-table.yaml

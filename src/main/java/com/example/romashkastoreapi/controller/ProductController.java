@@ -27,16 +27,9 @@ public class ProductController {
 
     private final ProductService productService;
 
-    private final SaleService saleService;
-
-//    private final SupplyService supplyService;
-
-
-
     @Autowired
-    public ProductController(ProductService productService, SaleService saleService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
-        this.saleService = saleService;
     }
 
     @GetMapping

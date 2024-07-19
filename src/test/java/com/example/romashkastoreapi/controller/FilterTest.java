@@ -28,9 +28,6 @@ public class FilterTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     private ProductRepository productRepository;
 
     @Autowired
@@ -44,21 +41,21 @@ public class FilterTest {
         productCreateDTO1.setName("111");
         productCreateDTO1.setDescription("Test Description");
         productCreateDTO1.setPrice(BigDecimal.valueOf(1));
-        productCreateDTO1.setInStock(true);
+        productCreateDTO1.setQuantity(10);
         productService.createProduct(productCreateDTO1);
 
         var productCreateDTO2 = new ProductCreateDTO();
         productCreateDTO2.setName("222");
         productCreateDTO2.setDescription("Test Description");
         productCreateDTO2.setPrice(BigDecimal.valueOf(2));
-        productCreateDTO2.setInStock(true);
+        productCreateDTO2.setQuantity(10);
         productService.createProduct(productCreateDTO2);
 
         var productCreateDTO3 = new ProductCreateDTO();
         productCreateDTO3.setName("123");
         productCreateDTO3.setDescription("Test Description");
         productCreateDTO3.setPrice(BigDecimal.valueOf(3));
-        productCreateDTO3.setInStock(false);
+        productCreateDTO3.setQuantity(0);
         productService.createProduct(productCreateDTO3);
     }
 

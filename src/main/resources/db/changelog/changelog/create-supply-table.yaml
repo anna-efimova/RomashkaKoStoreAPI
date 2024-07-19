@@ -14,20 +14,21 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: name
+                  name: document_name
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
-                  name: productId
+                  name: product_id
                   type: BIGINT
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_delivery_product
+                    foreignKeyName: fk_supply_product
                     references: product(id)
               - column:
                   name: quantity
                   type: BIGINT
                   constraints:
                     nullable: false
-
+        - sql:
+            sql: alter table supply add constraint supply_quantity_positive check (quantity > 0)

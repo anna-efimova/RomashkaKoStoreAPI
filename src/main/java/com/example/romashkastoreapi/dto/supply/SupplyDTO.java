@@ -1,20 +1,20 @@
 package com.example.romashkastoreapi.dto.supply;
 
-import com.example.romashkastoreapi.model.ProductEntity;
-import com.example.romashkastoreapi.model.SaleEntity;
+import com.example.romashkastoreapi.dto.product.ProductDTO;
+import com.example.romashkastoreapi.model.SupplyEntity;
 
 public class SupplyDTO {
 
     private Long id;
     private String documentName;
-    private ProductEntity product;
+    private ProductDTO product;
     private int quantity;
 
-    public SupplyDTO(SaleEntity saleEntity) {
-        this.id = saleEntity.getId();
-        this.documentName = saleEntity.getDocumentName();
-        this.product = saleEntity.getProduct();
-        this.quantity = saleEntity.getQuantity();
+    public SupplyDTO(SupplyEntity supplyEntity) {
+        this.id = supplyEntity.getId();
+        this.documentName = supplyEntity.getDocumentName();
+        this.product = new ProductDTO(supplyEntity.getProduct());
+        this.quantity = supplyEntity.getQuantity();
     }
 
     public Long getId() {
@@ -33,12 +33,8 @@ public class SupplyDTO {
         this.documentName = documentName;
     }
 
-    public ProductEntity getProduct() {
+    public ProductDTO getProduct() {
         return product;
-    }
-
-    public void setProduct(ProductEntity product) {
-        this.product = product;
     }
 
     public int getQuantity() {
