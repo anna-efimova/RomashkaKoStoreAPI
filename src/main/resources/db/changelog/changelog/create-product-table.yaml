@@ -1,0 +1,33 @@
+#databaseChangeLog:
+#  - changeSet:
+#      id: 1
+#      author: Ann
+#      changes:
+#        - createTable:
+#            tableName: product
+#            columns:
+#              - column:
+#                  name: id
+#                  type: BIGINT
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                    nullable: false
+#              - column:
+#                  name: name
+#                  type: VARCHAR(255)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: description
+#                  type: VARCHAR(4096)
+#              - column:
+#                  name: price
+#                  type: DECIMAL(10, 2)
+#                  defaultValue: 0.0
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: in_stock
+#                  type: BOOLEAN
+#                  defaultValueBoolean: false
