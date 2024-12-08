@@ -4,17 +4,16 @@ import com.example.romashkastoreapi.dto.product.ProductCreateDTO;
 import com.example.romashkastoreapi.dto.product.ProductDTO;
 import com.example.romashkastoreapi.service.ProductService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -29,8 +28,26 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductDTO> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
+    }
+
+    @GetMapping("filter")
+    public ResponseEntity<List<ProductDTO>> getFiltered(
+        @RequestParam(required = false) @Size(max = 255) String name,
+        @RequestParam(required = false) @PositiveOrZero BigDecimal priceFrom,
+        @RequestParam(required = false) @PositiveOrZero BigDecimal priceTo,
+        @RequestParam(required = false) Boolean inStock,
+        Pageable pageable
+    ) {
+        boolean invalidSortParams = pageable.getSort().stream().anyMatch(
+            order -> (!order.getProperty().equals("name") && !order.getProperty().equals("price"))
+        );
+        if (invalidSortParams) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, "invalid page sort parameter");
+        }
+        return ResponseEntity.ok(productService.getFilteredProducts(name, priceFrom, priceTo, inStock, pageable));
     }
 
     @PostMapping
@@ -40,7 +57,10 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductCreateDTO productCreateDTO) {
+    public ResponseEntity<ProductDTO> updateProduct(
+        @PathVariable Long id,
+        @Valid @RequestBody ProductCreateDTO productCreateDTO
+    ) {
         ProductDTO updatedProduct = productService.updateProduct(id, productCreateDTO);
         return ResponseEntity.ok(updatedProduct);
     }
