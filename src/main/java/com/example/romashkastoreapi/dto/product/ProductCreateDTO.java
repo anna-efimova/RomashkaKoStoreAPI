@@ -1,6 +1,7 @@
 package com.example.romashkastoreapi.dto.product;
 
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,7 +18,8 @@ public class ProductCreateDTO {
     @DecimalMin("0.0")
     private BigDecimal price = BigDecimal.ZERO;
 
-    private boolean inStock = false;
+    @Min(0)
+    private int quantity = 0;
 
     public String getName() {
         return name;
@@ -43,11 +45,12 @@ public class ProductCreateDTO {
         this.price = price;
     }
 
-    public boolean isInStock() {
-        return inStock;
+    @Min(0)
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setInStock(boolean inStock) {
-        this.inStock = inStock;
+    public void setQuantity(@Min(0) int quantity) {
+        this.quantity = quantity;
     }
 }

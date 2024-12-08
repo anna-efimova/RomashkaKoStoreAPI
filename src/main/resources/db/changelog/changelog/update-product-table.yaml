@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: Ann
+      changes:
+        - addColumn:
+            tableName: product
+            columns:
+              - column:
+                  name: quantity
+                  type: BIGINT
+                  defaultValue: 0
+        - dropColumn:
+            tableName: product
+            columnName: in_stock
+        - sql:
+            sql: alter table product add constraint product_quantity_non_negative check (quantity >= 0)

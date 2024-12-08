@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Ann
+      changes:
+        - createTable:
+            tableName: sale
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: document_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: purchase_price
+                  type: DECIMAL
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_sale_product
+                    references: product(id)
+              - column:
+                  name: quantity
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - sql:
+            sql: alter table sale add constraint sale_quantity_positive check (quantity > 0)
+        - sql:
+            sql: alter table sale add constraint sale_purchase_price_positive check (purchase_price > 0)

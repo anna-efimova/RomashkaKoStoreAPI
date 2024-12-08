@@ -3,10 +3,15 @@ package com.example.romashkastoreapi.controller;
 import com.example.romashkastoreapi.dto.product.ProductCreateDTO;
 import com.example.romashkastoreapi.dto.product.ProductDTO;
 import com.example.romashkastoreapi.service.ProductService;
+import com.example.romashkastoreapi.service.SaleService;
+
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

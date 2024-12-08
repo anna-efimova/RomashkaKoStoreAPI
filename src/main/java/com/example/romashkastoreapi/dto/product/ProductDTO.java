@@ -14,6 +14,7 @@ public class ProductDTO {
     private String description;
     private BigDecimal price;
     private boolean inStock;
+    private int quantity;
 
     public ProductDTO() {
     }
@@ -24,6 +25,7 @@ public class ProductDTO {
         this.price = productEntity.getPrice();
         this.description = productEntity.getDescription();
         this.inStock = productEntity.isInStock();
+        this.quantity = productEntity.getQuantity();
     }
 
     public Long getId() {
@@ -64,5 +66,13 @@ public class ProductDTO {
 
     public void setInStock(boolean inStock) {
         this.inStock = inStock;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

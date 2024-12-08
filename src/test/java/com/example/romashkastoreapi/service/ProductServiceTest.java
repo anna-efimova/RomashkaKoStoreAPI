@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 @SpringBootTest
 public class ProductServiceTest {
@@ -31,13 +33,13 @@ public class ProductServiceTest {
         productEntity.setName("Test Product");
         productEntity.setDescription("Test Description");
         productEntity.setPrice(BigDecimal.valueOf(10.0));
-        productEntity.setInStock(true);
+        productEntity.setQuantity(10);
 
         productCreateDTO = new ProductCreateDTO();
         productCreateDTO.setName("Test Product");
         productCreateDTO.setDescription("Test Description");
         productCreateDTO.setPrice(BigDecimal.valueOf(10.0));
-        productCreateDTO.setInStock(true);
+        productCreateDTO.setQuantity(10);
     }
 
     @Test
